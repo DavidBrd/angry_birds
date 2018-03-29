@@ -6,17 +6,19 @@ var init = function () {
 	//this.y = 0;
 	//this.width = 50;
 	//this.height = 100;
-	var wall1 = new Sprite(new Vector(0,0), 1000, 1, Infinity,
-                             document.getElementById("wall1"));
-    var wall2 = new Sprite(new Vector(0,599), 1000, 1, Infinity,
-                             document.getElementById("wall2"));
-    var wall3 = new Sprite(new Vector(0,0), 1, 600, Infinity,
-                             document.getElementById("wall3"));
-    var wall4 = new Sprite(new Vector(999,0), 1, 600, Infinity,
-                             document.getElementById("wall4"));
 
+	var canvas = document.getElementById("canvas");
+
+	var wall1 = new Sprite(new Vector(0,0), 1000, 10, Infinity,
+                             canvas);
+    var wall2 = new Sprite(new Vector(0,599), 1000, 10, Infinity,
+                             canvas);
+    var wall3 = new Sprite(new Vector(0,0), 10, 600, Infinity,
+                             canvas);
+    var wall4 = new Sprite(new Vector(999,0), 10, 600, Infinity,
+                             canvas);
 	var obj = new Sprite(new Vector(650,350), 100, 250, Infinity,
-                             document.getElementById("obj"));
+                             canvas);
 	
 	var engine = new Engine();
 	engine.addBody(wall1);

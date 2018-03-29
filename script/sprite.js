@@ -1,7 +1,7 @@
 var Sprite = function (v, w, h, m, dom) {
     console.log(m);
     Body.call(this,v, w, h, m);
-    this.display = dom;
+    this.ctx = dom.getContext("2d");
 
 };
 
@@ -10,17 +10,20 @@ Sprite.prototype.constructor = Sprite;
 
 Sprite.prototype.draw = function () {
 
-    this.display.style.left = this.origin.x + "px";
-    this.display.style.top = this.origin.y + "px";
-    this.display.style.width = this.width + "px";
-    this.display.style.height = this.height + "px";
+    this.ctx.rect(this.origin.x, this.origin.y, this.width, this.height);
+    //this.ctx.stroke();
+    this.ctx.fill();
+    // this.ctx.style.left = this.origin.x + "px";
+    // this.ctx.style.top = this.origin.y + "px";
+    // this.ctx.style.width = this.width + "px";
+    // this.ctx.style.height = this.height + "px";
 
 
     if (this.hasCollision) {
-	this.display.style.backgroundColor = "red";
+	this.ctx.style.backgroundColor = "red";
 	this.setCollision(false);
     } else {
-	this.display.style.backgroundColor = "";
+	this.ctx.style.backgroundColor = "";
     };
 
 };
