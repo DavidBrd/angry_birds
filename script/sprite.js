@@ -11,7 +11,7 @@ Sprite.prototype.constructor = Sprite;
 Sprite.prototype.draw = function () {
 
     this.ctx.rect(this.origin.x, this.origin.y, this.width, this.height);
-    //this.ctx.stroke();
+    // this.ctx.stroke();
     this.ctx.fill();
     // this.ctx.style.left = this.origin.x + "px";
     // this.ctx.style.top = this.origin.y + "px";
@@ -19,11 +19,11 @@ Sprite.prototype.draw = function () {
     // this.ctx.style.height = this.height + "px";
 
 
-    if (this.hasCollision) {
-	this.ctx.style.backgroundColor = "red";
-	this.setCollision(false);
-    } else {
-	this.ctx.style.backgroundColor = "";
-    };
+ //    if (this.hasCollision) {
+	// this.ctx.style.backgroundColor = "red";
+	// this.setCollision(false);
+ //    } else {
+	// this.ctx.style.backgroundColor = "";
+ //    };
 
 };

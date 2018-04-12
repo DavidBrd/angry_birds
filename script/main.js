@@ -6,11 +6,14 @@ var init = function () {
 	//this.y = 0;
 	//this.width = 50;
 	//this.height = 100;
+	exec_request();
+
+	console.log(level);
 
 	var canvas = document.getElementById("canvas");
 
 	var wall1 = new Sprite(new Vector(0,0), 1000, 10, Infinity,
-                             canvas);
+                              canvas);
     var wall2 = new Sprite(new Vector(0,599), 1000, 10, Infinity,
                              canvas);
     var wall3 = new Sprite(new Vector(0,0), 10, 600, Infinity,
@@ -38,9 +41,6 @@ var init = function () {
 	    throw (e);
 	}
     }, 1000/60);
-    
-    
-    var canvas = document.getElementById("canvas");
 
     canvas.addEventListener("click", function (ev) {
 	if (this != ev.target) return;
@@ -50,11 +50,11 @@ var init = function () {
 	var y = 500;
 
 	var mass = 1;
-	var div = document.createElement("div");
-	div.className = "object";
-	var sprite = new Sprite(new Vector(x,y), 30, 30, mass, div);
+	// var div = document.createElement("div");
+	// div.className = "object";
+	var sprite = new Sprite(new Vector(x,y), 30, 30, mass, canvas);
 	sprite.force = new Vector(0.01,0.01);
-	canvas.appendChild(div);
+	// canvas.appendChild(div);
 	engine.addBody(sprite);
 
 	
