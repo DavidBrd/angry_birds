@@ -6,57 +6,68 @@ var init = function () {
 	//this.y = 0;
 	//this.width = 50;
 	//this.height = 100;
-	exec_request();
-
-	console.log(level);
+	var level1 = exec_request();
 
 	var canvas = document.getElementById("canvas");
+	var ctx = canvas.getContext('2d');
 
-	var wall1 = new Sprite(new Vector(0,0), 1000, 10, Infinity,
-                              canvas);
-    var wall2 = new Sprite(new Vector(0,599), 1000, 10, Infinity,
-                             canvas);
-    var wall3 = new Sprite(new Vector(0,0), 10, 600, Infinity,
-                             canvas);
-    var wall4 = new Sprite(new Vector(999,0), 10, 600, Infinity,
-                             canvas);
-	var obj = new Sprite(new Vector(650,350), 100, 250, Infinity,
-                             canvas);
+	var wall1 = new Sprite(new Vector(level1.walls[0].v_x, level1.walls[0].v_y),
+									  level1.walls[0].width, level1.walls[0].height, Infinity,
+                              		  ctx);
+    var wall2 = new Sprite(new Vector(level1.walls[1].v_x , level1.walls[1].v_y), 
+    								  level1.walls[1].width, level1.walls[1].height, Infinity,
+                             		  ctx);
+    var wall3 = new Sprite(new Vector(level1.walls[2].v_x , level1.walls[2].v_y), 
+    								  level1.walls[2].width, level1.walls[2].height, Infinity,
+                             		  ctx);
+    var wall4 = new Sprite(new Vector(level1.walls[3].v_x , level1.walls[3].v_y), 
+    								  level1.walls[3].width, level1.walls[3].height, Infinity,
+                             		  ctx);
+    var obstacle1 = new Sprite(new Vector(level1.obstacles[0].v_x , level1.obstacles[0].v_y), 
+    								  level1.obstacles[0].width, level1.obstacles[0].height, Infinity,
+                             		  ctx);
 	
 	var engine = new Engine();
 	engine.addBody(wall1);
     engine.addBody(wall2);
     engine.addBody(wall3);
     engine.addBody(wall4);
-	engine.addBody(obj);
+	engine.addBody(obstacle1);
 
 
-    var renderer = new Renderer(engine);
-    var interval;
-    interval = setInterval(function () {
-	try {
-            renderer.update(1000/60);
-	} catch (e) {
-	    clearInterval(interval);
-	    throw (e);
-	}
-    }, 1000/60);
+    //var renderer = new Renderer(engine);
+ //    var interval;
+ //    interval = setInterval(function () {
+	// try {
+ //            renderer.update(1000/60, ctx);
+	// } catch (e) {
+	//     clearInterval(interval);
+	//     throw (e);
+	// }
+ //    }, 1000/60);
 
-    canvas.addEventListener("click", function (ev) {
-	if (this != ev.target) return;
+ 	function full_draw() {
+ 		engine.update(1000/60);
+ 		ctx.clearRect(0, 0, 1000, 600);
+    	engine.bodies.forEach(function (b) {
+        	b.draw();
+    	});
+    	raf = window.requestAnimationFrame(full_draw);
+ 	}
+
+ 	raf = window.requestAnimationFrame(full_draw);
+
+	canvas.addEventListener("click", function (ev) {
+		if (this != ev.target) return;
 
 
-	var x = 75;
-	var y = 500;
+		var x = 75;
+		var y = 500;
 
-	var mass = 1;
-	// var div = document.createElement("div");
-	// div.className = "object";
-	var sprite = new Sprite(new Vector(x,y), 30, 30, mass, canvas);
-	sprite.force = new Vector(0.01,0.01);
-	// canvas.appendChild(div);
-	engine.addBody(sprite);
-
+		var mass = 1;
+		var sprite = new Sprite(new Vector(x,y), 30, 30, mass, ctx);
+		sprite.force = new Vector(0.01,0.01);
+		engine.addBody(sprite);
 	
 	});
 	
