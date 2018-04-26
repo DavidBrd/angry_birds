@@ -19,9 +19,7 @@ Engine.prototype.update = function (dt) {
     for (var i = 0; i < this.bodies.length; i ++) {
 
         var body = this.bodies[i];
-
-
-
+        
         // On regarde si avec une telle vitesse il peut y avoir collision avec les autres objets.
         for (var j = i+1; j < this.bodies.length; j++) {
 
