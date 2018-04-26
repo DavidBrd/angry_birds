@@ -11,13 +11,9 @@ var Body = function (v, w, h, m, isTarget) {
 Body.prototype = Object.create(Rect.prototype);
 Body.prototype.constructor = Body;
 
-
-
 Body.prototype.setCollision = function (b) {
     this.hasCollision = b;
 };
-
-
 
 /* Dectection de collision entre l'objet courant et l'objet b.
 
@@ -25,14 +21,15 @@ Body.prototype.setCollision = function (b) {
    pour l'objet courant et pour b
 */
 
-
-
 Body.prototype.collision = function (b) {
 
     var mdiff = this.mDiff(b);
     if (mdiff.hasOrigin()) {
 
     	// if(this.isTarget) return { velocity1 : 0, velocity2 : 0 };
+
+    	// if(this.velocity.x < 1 && this.velocity.y < 1)
+    	// 	this.velocity = Vector.ZERO;
 
 		var vectors = [ new Vector (0,mdiff.origin.y),
 				new Vector (0,mdiff.origin.y+mdiff.height),
@@ -68,15 +65,15 @@ Body.prototype.collision = function (b) {
 
 		n = n.normalize();
 
-	        // On calcule l'impulsion j :
-	        var v = this.velocity.sub(b.velocity);
-	        var e = Constants.elasticity; // pour les étudiants, juste faire var e = 1;
+        // On calcule l'impulsion j :
+        var v = this.velocity.sub(b.velocity);
+        var e = Constants.elasticity; // pour les étudiants, juste faire var e = 1;
 
-	        var j = -(1 + e) * v.dot(n) / (this.invMass + b.invMass);
+        var j = -(1 + e) * v.dot(n) / (this.invMass + b.invMass);
 
-	        // On calcule les nouvelles vitesses:
-	        var new_v = this.velocity.add(n.mult(j  * this.invMass));
-	        var new_bv = b.velocity.sub(n.mult(j * b.invMass));
+        // On calcule les nouvelles vitesses:
+        var new_v = this.velocity.add(n.mult(j  * this.invMass));
+        var new_bv = b.velocity.sub(n.mult(j * b.invMass));
 
 		b.setCollision(true);
 		this.setCollision(true);

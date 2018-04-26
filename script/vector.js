@@ -1,6 +1,10 @@
 var Vector = function (x, y) {
-    Object.defineProperty ( this, "x", { writable: false, value : x });
-    Object.defineProperty ( this, "y", { writable: false, value : y });
+
+	this.x = x;
+	this.y = y;
+
+    // Object.defineProperty ( this, "x", { writable: false, value : x });
+    // Object.defineProperty ( this, "y", { writable: false, value : y });
 };
 
 Vector.prototype.add = function (v) {
