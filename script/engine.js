@@ -14,6 +14,18 @@ Engine.prototype.removeBody = function (b) {
 	this.bodies.splice(i, 1);
 };
 
+Engine.prototype.getMissile = function() {
+    console.log(this.bodies.length);
+    for(let i = 0; i < this.bodies.length; i++) {
+        console.log(i);
+        if(this.bodies[i].isMissile)
+            return this.bodies[i];
+        else{
+            return null;
+        }
+    }
+}
+
 Engine.prototype.update = function (dt) {
 
     for (var i = 0; i < this.bodies.length; i ++) {
@@ -32,7 +44,7 @@ Engine.prototype.update = function (dt) {
                 body.velocity = res.velocity1;
                 otherBody.velocity = res.velocity2;
 
-            };
+            }
         };
 
 
@@ -45,6 +57,7 @@ Engine.prototype.update = function (dt) {
         body.force = Vector.ZERO;
         var delta_v = a.mult(dt);
         body.velocity = body.velocity.add(delta_v);
+
 
         // On met à jour la position.
         body.move(body.velocity.mult(dt));

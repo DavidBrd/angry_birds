@@ -1,4 +1,4 @@
-var Body = function (v, w, h, m, isTarget) {
+var Body = function (v, w, h, m, isTarget, isMissile) {
     Rect.call(this, v, w, h);
     this.mass = m || 0;
     this.invMass = 1/this.mass;
@@ -6,6 +6,7 @@ var Body = function (v, w, h, m, isTarget) {
     this.force = Vector.ZERO;
     this.hasCollision = false;
     this.isTarget = isTarget;
+    this.isMissile = isMissile;
 };
 
 Body.prototype = Object.create(Rect.prototype);

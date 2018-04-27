@@ -1,5 +1,5 @@
-var Sprite = function (v, w, h, m, isTarget, dom) {
-    Body.call(this,v, w, h, m, isTarget);
+var Sprite = function (v, w, h, m, isTarget, isMissile, dom) {
+    Body.call(this,v, w, h, m, isTarget, isMissile);
     this.ctx = dom;
 };
 
@@ -10,6 +10,7 @@ Sprite.prototype.draw = function () {
 
     var color = 'blue';
     if(this.isTarget) color = 'red';
+    if(this.isMissile) color = 'green';
 
     this.ctx.beginPath();
     this.ctx.rect(this.origin.x, this.origin.y, this.width, this.height);
