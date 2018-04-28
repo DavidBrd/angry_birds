@@ -17,7 +17,10 @@ Sprite.prototype.draw = function () {
     this.ctx.closePath();
     this.ctx.fillStyle = color;
     this.ctx.fill();
-
+	
+	if (this.hasCollision) {
+		this.setCollision(false);
+	}
 
  //    if (this.hasCollision) {
 	// this.ctx.style.backgroundColor = "red";

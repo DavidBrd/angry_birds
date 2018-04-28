@@ -1,10 +1,16 @@
 var Engine = function () {
     this.bodies = [];
+	this.estFini = false;
 };
 
 
 Engine.prototype.addBody = function (b) {
     this.bodies.push(b);
+};
+
+
+Engine.prototype.getEstFini = function() {
+	return this.estFini;
 };
 
 
@@ -36,10 +42,17 @@ Engine.prototype.update = function (dt) {
         for (var j = i+1; j < this.bodies.length; j++) {
 
             var otherBody = this.bodies[j];
-
+			
             var res = body.collision(otherBody);
 
             if (res != null) {
+				
+				// condition de victoire
+				if ((body.isTarget && otherBody.isMissile) || (body.isMissile && otherBody.isTarget)) {
+					console.log("Victoire");
+					this.estFini = true;
+				}
+				
                 // mise à jour des vitesses
                 body.velocity = res.velocity1;
                 otherBody.velocity = res.velocity2;
@@ -49,7 +62,7 @@ Engine.prototype.update = function (dt) {
 
 
         if (Number.isFinite(body.mass))
-	    body.force = body.force.add(Constants.gravity.mult(body.mass));
+			body.force = body.force.add(Constants.gravity.mult(body.mass));
 
 
         // On calcule la nouvelle accéleration :
@@ -61,7 +74,9 @@ Engine.prototype.update = function (dt) {
 
         // On met à jour la position.
         body.move(body.velocity.mult(dt));
+		
 
     };
 
 };
+

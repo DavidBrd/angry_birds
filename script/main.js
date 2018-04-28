@@ -49,13 +49,21 @@ var init = function () {
 	// console.log(mis);
 
  	function full_refresh_draw() {
- 		engine.update(1000/60);
- 		ctx.fillStyle = 'rgba(255,255,255,0.3)';
- 		ctx.fillRect(0, 0, 1000, 600);
-    	engine.bodies.forEach(function (b) {
-        	b.draw();
-    	});
-    	raf = window.requestAnimationFrame(full_refresh_draw);
+		if (engine.getEstFini() == true) {
+			//ctx.clearRect(0, 0, 1000, 600);
+			ctx.font = "40px Calibri,Geneva,Arial";
+			ctx.fillStyle = "black";
+			ctx.fillText("Victoire", 400, 300);
+		} else {
+			engine.update(1000/60);
+			ctx.fillStyle = 'rgba(255,255,255,0.3)';
+			ctx.fillRect(0, 0, 1000, 600);
+			engine.bodies.forEach(function (b) {
+				b.draw();
+			});
+			raf = window.requestAnimationFrame(full_refresh_draw);
+		}
+ 		
  	}
 
  	raf = window.requestAnimationFrame(full_refresh_draw);

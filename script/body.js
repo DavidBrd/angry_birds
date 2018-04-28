@@ -18,7 +18,7 @@ Body.prototype.setCollision = function (b) {
 
 /* Dectection de collision entre l'objet courant et l'objet b.
 
-   Renvoie null si pas de collision, sinon renvoie les nouveau vecteur vitesse
+   Renvoie null si pas de collision, sinon renvoie les nouveaux vecteurs vitesse
    pour l'objet courant et pour b
 */
 
@@ -41,7 +41,7 @@ Body.prototype.collision = function (b) {
 
 		for (var i = 1; i < vectors.length; i++) {
 		    if (vectors[i].norm() < n.norm())
-			n = vectors[i];
+				n = vectors[i];
 		};
 
 		var norm_v = this.velocity.norm();
@@ -75,6 +75,13 @@ Body.prototype.collision = function (b) {
         // On calcule les nouvelles vitesses:
         var new_v = this.velocity.add(n.mult(j  * this.invMass));
         var new_bv = b.velocity.sub(n.mult(j * b.invMass));
+
+		if (new_v < 0.2) {
+			new_v = 0;
+		}
+		if (new_bv < 0.2) {
+			new_bv = 0;
+		}
 
 		b.setCollision(true);
 		this.setCollision(true);
