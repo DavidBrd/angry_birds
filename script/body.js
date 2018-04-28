@@ -1,87 +1,94 @@
-var Body = function (v, w, h, m, isTarget, isMissile) {
-    Rect.call(this, v, w, h);
-    this.mass = m || 0;
-    this.invMass = 1/this.mass;
-    this.velocity = Vector.ZERO;
-    this.force = Vector.ZERO;
-    this.hasCollision = false;
-    this.isTarget = isTarget;
-    this.isMissile = isMissile;
-};
+class Body extends Rect {
+	constructor(v, w, h, m, isTarget, isMissile, dom) {
+		super(v, w, h);
+	    this.mass = m || 0;
+	    this.invMass = 1/this.mass;
+	    this.velocity = Vector.ZERO;
+	    this.force = Vector.ZERO;
+	    this.hasCollision = false;
+	    this.isTarget = isTarget;
+	    this.isMissile = isMissile;
+	    this.ctx = dom;
+	    this.isTouched = false;
+	}
 
-Body.prototype = Object.create(Rect.prototype);
-Body.prototype.constructor = Body;
+	setCollision(b) {
+		this.hasCollision = b;	
+	}
 
-Body.prototype.setCollision = function (b) {
-    this.hasCollision = b;
-};
+	draw() {
+		var color = 'blue';
+	    if(this.isTarget) color = 'red';
+	    if(this.isMissile) color = 'green';
 
-/* Dectection de collision entre l'objet courant et l'objet b.
+	    this.ctx.beginPath();
+	    this.ctx.rect(this.origin.x, this.origin.y, this.width, this.height);
+	    this.ctx.closePath();
+	    this.ctx.fillStyle = color;
+	    this.ctx.fill();
 
-   Renvoie null si pas de collision, sinon renvoie les nouveau vecteur vitesse
-   pour l'objet courant et pour b
-*/
+	    if (this.hasCollision) {
+			this.setCollision(false);
+		}
+	}
 
-Body.prototype.collision = function (b) {
+	collision(b) {
+		var mdiff = this.mDiff(b);
+    	if (mdiff.hasOrigin()) {
 
-    var mdiff = this.mDiff(b);
-    if (mdiff.hasOrigin()) {
+			var vectors = [ new Vector (0,mdiff.origin.y),
+					new Vector (0,mdiff.origin.y+mdiff.height),
+					new Vector (mdiff.origin.x, 0),
+					new Vector (mdiff.origin.x + mdiff.width, 0) ];
 
-    	// if(this.isTarget) return { velocity1 : 0, velocity2 : 0 };
+			var n = vectors[0];
 
-    	// if(this.velocity.x < 1 && this.velocity.y < 1)
-    	// 	this.velocity = Vector.ZERO;
+			for (var i = 1; i < vectors.length; i++) {
+			    if (vectors[i].norm() < n.norm())
+				n = vectors[i];
+			};
 
-		var vectors = [ new Vector (0,mdiff.origin.y),
-				new Vector (0,mdiff.origin.y+mdiff.height),
-				new Vector (mdiff.origin.x, 0),
-				new Vector (mdiff.origin.x + mdiff.width, 0) ];
+			var norm_v = this.velocity.norm();
+			var norm_vb = b.velocity.norm();
+			var kv = norm_v / (norm_v + norm_vb);
+			var kvb = norm_vb / (norm_v + norm_vb);
 
-		var n = vectors[0];
+			if (norm_v == 0 && norm_vb == 0) {
+			    if (this.invMass == 0 && this.invMass == 0)
+				return null;
+			    else {
+				if (this.mass <= b.mass)
+				    kv = 1;
+				else
+				    kvb = 1
+			    }
 
-		for (var i = 1; i < vectors.length; i++) {
-		    if (vectors[i].norm() < n.norm())
-			n = vectors[i];
-		};
+			};
 
-		var norm_v = this.velocity.norm();
-		var norm_vb = b.velocity.norm();
-		var kv = norm_v / (norm_v + norm_vb);
-		var kvb = norm_vb / (norm_v + norm_vb);
+			this.move(n.mult(kv));
+			b.move(n.mult(-kvb));
 
-		if (norm_v == 0 && norm_vb == 0) {
-		    if (this.invMass == 0 && this.invMass == 0)
-			return null;
-		    else {
-			if (this.mass <= b.mass)
-			    kv = 1;
-			else
-			    kvb = 1
-		    }
+			n = n.normalize();
 
-		};
+	        // On calcule l'impulsion j :
+	        var v = this.velocity.sub(b.velocity);
+	        var e = Constants.elasticity; // pour les étudiants, juste faire var e = 1;
 
-		this.move(n.mult(kv));
-		b.move(n.mult(-kvb));
+	        var j = -(1 + e) * v.dot(n) / (this.invMass + b.invMass);
 
-		n = n.normalize();
+	        // On calcule les nouvelles vitesses:
+	        var new_v = this.velocity.add(n.mult(j  * this.invMass));
+	        var new_bv = b.velocity.sub(n.mult(j * b.invMass));
 
-        // On calcule l'impulsion j :
-        var v = this.velocity.sub(b.velocity);
-        var e = Constants.elasticity; // pour les étudiants, juste faire var e = 1;
+			b.setCollision(true);
+			this.setCollision(true);
 
-        var j = -(1 + e) * v.dot(n) / (this.invMass + b.invMass);
+			// Ajout hysteresis
 
-        // On calcule les nouvelles vitesses:
-        var new_v = this.velocity.add(n.mult(j  * this.invMass));
-        var new_bv = b.velocity.sub(n.mult(j * b.invMass));
+		    return { velocity1 : new_v, velocity2 : new_bv };
 
-		b.setCollision(true);
-		this.setCollision(true);
-
-	    return { velocity1 : new_v, velocity2 : new_bv };
-
-    } else {
-        return null;
-    }
-};
+    	} else {
+        	return null;
+    	}
+	}
+}
