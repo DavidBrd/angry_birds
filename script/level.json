@@ -47,6 +47,14 @@
                 "width" : 40,
                 "height" : 40
             }
+        ],
+        "projectiles" : [
+            {
+                "v_x" : 75,
+                "v_y" : 560,
+                "width" : 30,
+                "height" : 30
+            }
         ]
     }
 ]
