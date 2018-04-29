@@ -35,7 +35,7 @@ class Level {
 			                              		  true, false, ctx));
 				}
 
-				// chargement du projectile (position initiale)
+				// Chargement du projectile (position initiale)
 				engine.addBody(new Body(new Vector(level[0].projectile.v_x, level[0].projectile.v_y),
 											  level[0].projectile.width, level[0].projectile.height, Infinity,
 		                              		  false, true, ctx));

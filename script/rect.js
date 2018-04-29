@@ -1,4 +1,4 @@
-// class Rect : défini la nature de base de nos objets (propriété pour faire des rectangles)
+// class Rect : définit la nature de base de nos objets (propriété pour faire des rectangles)
 class Rect {
 	constructor(v, w, h) {
 		this.origin = v;
@@ -11,7 +11,7 @@ class Rect {
 		this.origin = this.origin.add(v);	
 	}
 
-	// fonction qui calcul la soustraction de Minkowski entre le rectangle courant et "r"
+	// fonction qui calcule la soustraction de Minkowski entre le rectangle courant et "r"
 	mDiff(r) {
 		var orig = new Vector (r.origin.x - this.origin.x - this.width,
 		r.origin.y - this.origin.y - this.height);

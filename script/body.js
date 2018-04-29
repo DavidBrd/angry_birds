@@ -1,4 +1,4 @@
-// Classe Body : Permet de représenté chaque "corps" de notre modèle
+// Classe Body : Permet de représenter chaque "corps" de notre modèle
 class Body extends Rect {
 	constructor(v, w, h, m, isTarget, isMissile, dom) {
 		super(v, w, h);
@@ -14,7 +14,7 @@ class Body extends Rect {
 	    this.hysteresis = 0.02;
 	}
 
-	// Modifier l'attribut "hasCollision" si une collision à lieu
+	// Modifier l'attribut "hasCollision" si une collision a lieu
 	setCollision(b) {
 		this.hasCollision = b;	
 	}
@@ -36,8 +36,8 @@ class Body extends Rect {
 		}
 	}
 
-	// Fonction qui renvoie null dans le cas ou on detecte aucune collision entre deux
-	// corps physique. Dans le cas contraire, celle-ci renvoie les deux nouveaux vecteurs
+	// Fonction qui renvoie null dans le cas ou on ne détecte aucune collision entre deux
+	// corps physiques. Dans le cas contraire, celle-ci renvoie les deux nouveaux vecteurs
 	// vitesses
 	collision(b) {
 		var mdiff = this.mDiff(b);

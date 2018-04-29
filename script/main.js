@@ -11,7 +11,7 @@ var init = function () {
 	// appel de la fonction qui charge les éléments du niveau
 	level.load_level(engine, ctx);
 
-	// fonction qui appel les fonctions chargées de dessiner les objets du niveau
+	// fonction qui appelle les fonctions chargées de dessiner les objets du niveau
 	// avec plus ou moins 60 fps
  	function full_refresh_draw() {
 		vue.refresh_draw();

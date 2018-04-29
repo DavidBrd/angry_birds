@@ -1,4 +1,4 @@
-// Classe Controller : charger de controler toutes les intéractions de l'utilisateur
+// Classe Controller : classe chargée de controler toutes les interactions de l'utilisateur
 class Controller {
 	constructor(engine, force, velocity, dom_vp, dom_hp, paused, ctx, full_refresh_draw) {
 		this.engine = engine;
@@ -11,7 +11,7 @@ class Controller {
 		this.full_refresh_draw = full_refresh_draw;
 	}
 
-	// Fonction principale du controller : écoute les événements attendu de l'utilisateur
+	// Fonction principale du controller : écoute les événements attendus de l'utilisateur
 	callback(event) {
 
 		// si la touche "v" est pressée on augmente la force verticale
@@ -49,7 +49,7 @@ class Controller {
  			var missile = this.engine.getMissile();
  			var posX1 = missile.origin.x;
  			var posY1 = missile.origin.y;
- 			// on déclenche le lancé si le corps est à la position initiale
+ 			// on déclenche le lancer si le corps est à la position initiale
  			if(posX1 == 75 && posY1 == 560) {
  				missile.mass = 1;
 	 			missile.invMass = 1/missile.mass;
@@ -58,7 +58,7 @@ class Controller {
  			}
  			// si l'utilisateur appuie et qu'un projectile est déjà lancé,
  			// on l'annule, on supprime le projectile lancé, et on réinitialise la position
- 			// pour un nouveau lancé
+ 			// pour un nouveau lancer
  			else {
  				this.engine.removeBody(missile);
  				missile = new Body(new Vector(75, 560), 30, 30, Infinity, false, true, this.ctx);

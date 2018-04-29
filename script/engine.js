@@ -1,4 +1,4 @@
-// Classe Engine qui gère tous les corps physique de l'environnement
+// Classe Engine qui gère tous les corps physiques de l'environnement
 class Engine {
     constructor() {
         this.bodies = [];
@@ -15,7 +15,7 @@ class Engine {
         return this.endGame;
     }
 
-    // Sensée renvoyer l'élément correpondant au projectile
+    // Censée renvoyer l'élément correpondant au projectile
     getMissile() {
         for(let i = 0; i < this.bodies.length; i++) {
             if(this.bodies[i].isMissile) return this.bodies[i];
@@ -28,7 +28,7 @@ class Engine {
         if (i >= 0) this.bodies.splice(i, 1);
     }
 
-    // Fonction update : qui se charge de mettre à jours les positions des "corps" du
+    // Fonction update : qui se charge de mettre à jour les positions des "corps" du
     // modèle en prenant en compte les éventuelles collisions
     update(dt) {
         for (var i = 0; i < this.bodies.length; i ++) {

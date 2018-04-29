@@ -1,4 +1,4 @@
-// class Vue : se charge de déssiner et faire le rendu de tous les éléments dans le canvas
+// class Vue : se charge de dessiner et faire le rendu de tous les éléments dans le canvas
 class Vue {
 	constructor(engine, ctx) {
 		this.engine = engine;
@@ -25,7 +25,7 @@ class Vue {
 				b.draw();
 			});
 		}
-		// on appel la fonction de dessin victoire
+		// on appelle la fonction de dessin victoire
 		else {
 			this.draw_finish();
 		}
