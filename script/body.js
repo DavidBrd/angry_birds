@@ -1,3 +1,4 @@
+// Classe Body : Permet de représenté chaque "corps" de notre modèle
 class Body extends Rect {
 	constructor(v, w, h, m, isTarget, isMissile, dom) {
 		super(v, w, h);
@@ -13,14 +14,16 @@ class Body extends Rect {
 	    this.hysteresis = 0.02;
 	}
 
+	// Modifier l'attribut "hasCollision" si une collision à lieu
 	setCollision(b) {
 		this.hasCollision = b;	
 	}
 
+	// Fonction permettant de dessiner le "corps" courant dans le canvas général
 	draw() {
-		var color = 'blue';
-	    if(this.isTarget) color = 'red';
-	    if(this.isMissile) color = 'green';
+		var color = 'blue'; // couleur des éléments de base
+	    if(this.isTarget) color = 'red'; // couleur de la cible
+	    if(this.isMissile) color = 'green'; // couleur du projectile
 
 	    this.ctx.beginPath();
 	    this.ctx.rect(this.origin.x, this.origin.y, this.width, this.height);
@@ -33,6 +36,9 @@ class Body extends Rect {
 		}
 	}
 
+	// Fonction qui renvoie null dans le cas ou on detecte aucune collision entre deux
+	// corps physique. Dans le cas contraire, celle-ci renvoie les deux nouveaux vecteurs
+	// vitesses
 	collision(b) {
 		var mdiff = this.mDiff(b);
     	if (mdiff.hasOrigin()) {
@@ -73,7 +79,7 @@ class Body extends Rect {
 
 	        // On calcule l'impulsion j :
 	        var v = this.velocity.sub(b.velocity);
-	        var e = Constants.elasticity; // pour les étudiants, juste faire var e = 1;
+	        var e = Constants.elasticity;
 
 	        var j = -(1 + e) * v.dot(n) / (this.invMass + b.invMass);
 
