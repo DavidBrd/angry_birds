@@ -10,6 +10,7 @@ class Body extends Rect {
 	    this.isMissile = isMissile;
 	    this.ctx = dom;
 	    this.isTouched = false;
+	    this.hysteresis = 0.02;
 	}
 
 	setCollision(b) {
@@ -84,6 +85,9 @@ class Body extends Rect {
 			this.setCollision(true);
 
 			// Ajout hysteresis
+			if(Math.abs(new_bv.x) < this.hysteresis && Math.abs(new_bv.y) < this.hysteresis) {
+				new_bv = new Vector(0, 0);
+			}
 
 		    return { velocity1 : new_v, velocity2 : new_bv };
 

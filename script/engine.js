@@ -12,6 +12,12 @@ class Engine {
         return this.endGame;
     }
 
+    getMissile() {
+        for(let i = 0; i < this.bodies.length; i++) {
+            if(this.bodies[i].isMissile) return this.bodies[i];
+        }
+    }
+
     removeBody(b) {
         var i = this.bodies.findIndex (function (e) { return e == b; });
         if (i >= 0) this.bodies.splice(i, 1);
